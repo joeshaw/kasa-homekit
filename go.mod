@@ -1,4 +1,4 @@
-module github.com/joeshaw/kasa-homecontrol
+module github.com/joeshaw/kasa-homekit
 
 go 1.14
 

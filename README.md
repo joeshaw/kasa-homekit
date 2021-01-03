@@ -1,8 +1,8 @@
 
-# kasa-homecontrol
+# kasa-homekit
 
 Apple HomeKit support for TP-Link Kasa smart home devices using
-[HomeControl](https://github.com/brutella/hc).
+[hc](https://github.com/brutella/hc).
 
 Devices are detected and communicated with via the local network APIs.
 This module does not use the cloud APIs and does not require you to log
@@ -19,11 +19,11 @@ an Apple TV or iPad, you can control the device remotely.
 
 The tool can be installed with:
 
-    go get -u github.com/joeshaw/kasa-homecontrol
+    go get -u github.com/joeshaw/kasa-homekit
 
 Then you can run the service:
 
-    kasa-homecontrol
+    kasa-homekit
 
 The service will search for Kasa devices on your local network at
 startup, and every 5 seconds afterward.
@@ -46,7 +46,7 @@ sure the code has been run through `gofmt`.
 
 Copyright 2020 Joe Shaw
 
-`kasa-homecontrol` is licensed under the MIT License.  See the LICENSE
+`kasa-homekit` is licensed under the MIT License.  See the LICENSE
 file for details.
 
 
