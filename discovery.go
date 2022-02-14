@@ -39,6 +39,17 @@ type discoveryResponse struct {
 			NextAction struct {
 				Type int `json:"type"`
 			} `json:"next_action"`
+			Children []struct {
+				ID         string `json:"id"`
+				State      int    `json:"state"`
+				Alias      string `json:"alias"`
+				OnTime     int    `json:"on_time"`
+				NextAction struct {
+					Type int `json:"type"`
+				} `json:"next_action"`
+			}
+			ChildNum int `json:"child_num"`
+			NtcState int `json:"ntc_state"`
 		} `json:"get_sysinfo"`
 	} `json:"system"`
 	Emeter struct {
@@ -93,16 +104,33 @@ func discover() ([]Device, error) {
 			continue
 		}
 
-		d := Device{
-			Addr:            raddr,
-			Name:            si.Alias,
-			DeviceName:      si.DevName,
-			Model:           si.Model,
-			DeviceID:        si.DeviceID,
-			SoftwareVersion: si.SwVer,
-			RelayState:      si.RelayState == 1,
-			OnTime:          si.OnTime,
+		if len(si.Children) == 0 {
+			d := Device{
+				Addr:            raddr,
+				Name:            si.Alias,
+				DeviceName:      si.DevName,
+				Model:           si.Model,
+				DeviceID:        si.DeviceID,
+				SoftwareVersion: si.SwVer,
+				RelayState:      si.RelayState == 1,
+				OnTime:          si.OnTime,
+			}
+			devices = append(devices, d)
 		}
-		devices = append(devices, d)
+
+		for c := range si.Children {
+			d := Device{
+				Addr:            raddr,
+				Name:            si.Children[c].Alias,
+				DeviceName:      si.DevName,
+				Model:           si.Model,
+				DeviceID:        si.DeviceID + si.Children[c].ID,
+				SoftwareVersion: si.SwVer,
+				RelayState:      si.Children[c].State == 1,
+				OnTime:          si.Children[c].OnTime,
+				IsChild:         true,
+			}
+			devices = append(devices, d)
+		}
 	}
 }
