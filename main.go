@@ -91,7 +91,7 @@ func (kam *kasaAccessoryMap) AddOrUpdate(d Device) error {
 		}
 	})
 
-	log.Printf("Creating accessory for %q", d.Name)
+	log.Printf("Creating accessory for %q at %v", d.Name, d.Addr)
 
 	ka := &kasaAccessory{
 		device:    d,
